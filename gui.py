@@ -7,23 +7,35 @@ from kivy.app import App
 from kivy.uix.label import Label
 from kivy.uix.gridlayout import GridLayout
 from kivy.graphics import Color, Rectangle
+from kivy.clock import Clock
 
 SIZE = 150
 
+# * Serial poort en verzend snelheid constantes
+ser = serial.Serial('COM6', 9600)  # ? Check Arduino voor juiste poort
+
+# * Scores in volgende volgorde: Rood, Wit, Blauw, groen, geel
+scores = [0, 1, 2, 3, 4]
+delayT = 3  # Tijd dat applicatie 'slaapt' in SECONDEN
+
 
 class BackgroundLabel(Label):
-    def __init__(self, r, g, b, a, **kwargs):
+    def __init__(self, r, g, b, a, user, **kwargs):
         super(BackgroundLabel, self).__init__(**kwargs)
         self.r = r
         self.g = g
         self.b = b
         self.a = a
+        self.text = scores[user]
 
     def on_size(self, *args):
         self.canvas.before.clear()
         with self.canvas.before:
             Color(self.r, self.g, self.b, self.a)
             Rectangle(pos=self.pos, size=self.size)
+
+    #def update():
+        #pass
 
 
 class ScorebordApp(App):
@@ -33,32 +45,32 @@ class ScorebordApp(App):
         secondRow = GridLayout(cols=5)
 
         rood = BackgroundLabel(
-            text="10",
+            user=0,
             font_size=SIZE,
             r=1, g=0, b=0, a=1
         )
 
         groen = BackgroundLabel(
-            text="0",
+            user=3,
             font_size=SIZE,
-            r=0, g=1, b=0, a=1
+            r=0, g=1, b=0, a=0.25
         )
 
         geel = BackgroundLabel(
-            text="0",
+            user=4,
             font_size=SIZE,
             color=(0, 0, 0, 1),
             r=1, g=1, b=0, a=1
         )
 
         wit = BackgroundLabel(
-            text="0",
+            user=1,
             font_size=SIZE,
             color=(0, 0, 0, 1),
             r=1, g=1, b=1, a=1
         )
         blauw = BackgroundLabel(
-            text="0",
+            user=2,
             font_size=SIZE,
             r=0, g=0, b=1, a=1
         )
@@ -75,5 +87,37 @@ class ScorebordApp(App):
 
         return layout
 
+# TODO: Check voor scalibilty functie adhv scores
+
 
 ScorebordApp().run()
+
+# Check of er juiste antwoorden gegeven zijn
+while True:
+    antS = ser.readline()
+    antC = float(antS.decode('ascii'))
+
+    if (antC == 0):  # Check rood
+        scores[0] += 1
+        test = 50
+        sleep(delayT)
+
+    elif (antC == 1):
+        scores[1] += 1
+        test = 50
+        sleep(delayT)
+
+    elif (antC == 2):
+        scores[2] += 1
+        test = 50
+        sleep(delayT)
+
+    elif (antC == 3):
+        scores[3] += 1
+        test = 50
+        sleep(delayT)
+
+    elif (antC == 4):
+        scores[4] += 1
+        test = 50
+        sleep(delayT)
