@@ -1,27 +1,79 @@
-from tkinter import *
+# Imports ophalen score
+import serial
+from time import sleep
 
-class Window(Frame):
-    def __init__(self, master=None):
-        Frame.__init__(self, master)
-        self.master = master
-        self.init_window()
+# Imports voor GUI
+from kivy.app import App
+from kivy.uix.label import Label
+from kivy.uix.gridlayout import GridLayout
+from kivy.graphics import Color, Rectangle
 
-    # Create init window
-    def init_window(self):
-        self.master.title("Wolven Quiz")
+SIZE = 150
 
-        self.pack(fill=BOTH, expand=1)
 
-        quitButton = Button(self, text="Quit")
+class BackgroundLabel(Label):
+    def __init__(self, r, g, b, a, **kwargs):
+        super(BackgroundLabel, self).__init__(**kwargs)
+        self.r = r
+        self.g = g
+        self.b = b
+        self.a = a
 
-        quitButton.place(x=0, y=0)
+    def on_size(self, *args):
+        self.canvas.before.clear()
+        with self.canvas.before:
+            Color(self.r, self.g, self.b, self.a)
+            Rectangle(pos=self.pos, size=self.size)
 
-root = Tk()
 
-root.geometry("400x300")
+class ScorebordApp(App):
 
-app = Window(root)
-root.mainloop()
+    def build(self):
+        layout = GridLayout(rows=2)
+        secondRow = GridLayout(cols=5)
 
-if __name__ == "__main__":
-    pass
+        rood = BackgroundLabel(
+            text="10",
+            font_size=SIZE,
+            r=1, g=0, b=0, a=1
+        )
+
+        groen = BackgroundLabel(
+            text="0",
+            font_size=SIZE,
+            r=0, g=1, b=0, a=1
+        )
+
+        geel = BackgroundLabel(
+            text="0",
+            font_size=SIZE,
+            color=(0, 0, 0, 1),
+            r=1, g=1, b=0, a=1
+        )
+
+        wit = BackgroundLabel(
+            text="0",
+            font_size=SIZE,
+            color=(0, 0, 0, 1),
+            r=1, g=1, b=1, a=1
+        )
+        blauw = BackgroundLabel(
+            text="0",
+            font_size=SIZE,
+            r=0, g=0, b=1, a=1
+        )
+
+        secondRow.add_widget(rood)
+        secondRow.add_widget(wit)
+        secondRow.add_widget(blauw)
+        secondRow.add_widget(groen)
+        secondRow.add_widget(geel)
+
+        layout.add_widget(
+            Label(text="Wolven Quiz", size_hint_y=0.25, font_size=50))
+        layout.add_widget(secondRow)
+
+        return layout
+
+
+ScorebordApp().run()
