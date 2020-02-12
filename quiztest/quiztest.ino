@@ -1,5 +1,5 @@
 /*
- * Fuut - Laatste update 17/09/2019
+ * Fuut - Laatste update 10/02/2020
 
  * Basic quiz systeem met score bord
  * LED van buttons --> Rood = ground
@@ -58,7 +58,7 @@ int whiteButtonState = 0;
 int resetAan = 1;
 bool firstStart = true;
 
-int scores[] = {0, 0, 0, 0, 0}; // Volgorde: rood, wit, groen, blauw, geel
+int scores[] = {0, 0, 0, 0, 0}; // Volgorde: rood, wit, Blauw, groen, geel
 // int teams[] = {0, 1, 2, 3, 4, 5};
 int i;
 
@@ -139,12 +139,12 @@ void loop() {
     if((greenButtonState == 0)&&(resetAan == 0)) {
       digitalWrite(greenLed, HIGH);
       resetAan = 1;
-      i = 2;
+      i = 3; // 2
     }
     if((blueButtonState == 0)&&(resetAan == 0)) {
       digitalWrite(blueLed, HIGH);
       resetAan = 1;
-      i = 3;
+      i = 2; // 3
     }
     if((yellowButtonState == 0)&&(resetAan == 0)) {
       digitalWrite(yellowLed, HIGH);

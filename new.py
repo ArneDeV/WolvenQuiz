@@ -15,7 +15,7 @@ SIZE = 150
 ser = serial.Serial('COM6', 9600)  # ? Check Arduino voor juiste poort
 
 # * Scores in volgende volgorde: Rood, Wit, Blauw, groen, geel
-scores = [0, 0, 0, 0, 0]
+scores = [0, 1, 2, 3, 4]
 delayT = 3  # Tijd dat applicatie 'slaapt' in SECONDEN
 
 
@@ -26,7 +26,7 @@ class BackgroundLabel(Label):
         self.g = g
         self.b = b
         self.a = a
-        self.user = user
+        self.text = scores[user]
 
     def on_size(self, *args):
         self.canvas.before.clear()
@@ -34,42 +34,15 @@ class BackgroundLabel(Label):
             Color(self.r, self.g, self.b, self.a)
             Rectangle(pos=self.pos, size=self.size)
 
-    def update(self, *args):
-        self.text = str(scores[self.user])
+    #def update():
+        #pass
+
 
 class ScorebordApp(App):
 
-    def timer(self, dt):
-        antS = ser.readline()
-        antC = float(antS.decode('ascii'))
-
-        if (antC == 0):  # Check rood
-            scores[0] += 1
-            antC = 50
-
-        elif (antC == 1):
-            scores[1] += 1
-            antC = 50
-            #sleep(delayT)
-
-        elif (antC == 2):
-            scores[2] += 1
-            antC = 50
-            #sleep(delayT)
-
-        elif (antC == 3):
-            scores[3] += 1
-            antC = 50
-            #sleep(delayT)
-
-        elif (antC == 4):
-            scores[4] += 1
-            antC = 50
-            #sleep(delayT)
-
     def build(self):
         layout = GridLayout(rows=2)
-        secondRow = GridLayout(cols=6)
+        secondRow = GridLayout(cols=5)
 
         rood = BackgroundLabel(
             user=0,
@@ -81,6 +54,13 @@ class ScorebordApp(App):
             user=3,
             font_size=SIZE,
             r=0, g=1, b=0, a=0.25
+        )
+
+        geel = BackgroundLabel(
+            user=4,
+            font_size=SIZE,
+            color=(0, 0, 0, 1),
+            r=1, g=1, b=0, a=1
         )
 
         wit = BackgroundLabel(
@@ -95,13 +75,6 @@ class ScorebordApp(App):
             r=0, g=0, b=1, a=1
         )
 
-        geel = BackgroundLabel(
-            user=4,
-            font_size=SIZE,
-            color=(0, 0, 0, 1),
-            r=1, g=1,b=0,a=1
-        )
-
         secondRow.add_widget(rood)
         secondRow.add_widget(wit)
         secondRow.add_widget(blauw)
@@ -112,14 +85,6 @@ class ScorebordApp(App):
             Label(text="Wolven Quiz", size_hint_y=0.25, font_size=50))
         layout.add_widget(secondRow)
 
-        Clock.schedule_interval(rood.update, 1)
-        Clock.schedule_interval(wit.update, 1)
-        Clock.schedule_interval(blauw.update, 1)
-        Clock.schedule_interval(groen.update, 1)
-        Clock.schedule_interval(geel.update, 1)
-
-        Clock.schedule_interval(self.timer, 20)
-
         return layout
 
 # TODO: Check voor scalibilty functie adhv scores
@@ -128,5 +93,31 @@ class ScorebordApp(App):
 ScorebordApp().run()
 
 # Check of er juiste antwoorden gegeven zijn
-# while True:
-    
+while True:
+    antS = ser.readline()
+    antC = float(antS.decode('ascii'))
+
+    if (antC == 0):  # Check rood
+        scores[0] += 1
+        test = 50
+        sleep(delayT)
+
+    elif (antC == 1):
+        scores[1] += 1
+        test = 50
+        sleep(delayT)
+
+    elif (antC == 2):
+        scores[2] += 1
+        test = 50
+        sleep(delayT)
+
+    elif (antC == 3):
+        scores[3] += 1
+        test = 50
+        sleep(delayT)
+
+    elif (antC == 4):
+        scores[4] += 1
+        test = 50
+        sleep(delayT)
