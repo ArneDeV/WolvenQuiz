@@ -1,3 +1,9 @@
 # Arduino test
-Dit project was puur als test, de data van een termometer wordt naar python gestuurd
-Deze data wordt hierna gebruik in een programma
+Quiz systeem met GUI voor scorebord.
+Indien score bord gebruikt wil worden, verander bij Serial poort naar de poort waarop de Arduino is aangesloten.
+
+Kleurcodes van bedrading:
+  -
+  -
+  -
+  -
