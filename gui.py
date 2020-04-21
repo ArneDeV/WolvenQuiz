@@ -12,11 +12,11 @@ from kivy.clock import Clock
 SIZE = 150
 
 # * Serial poort en verzend snelheid constantes
-ser = serial.Serial('COM6', 9600)  # ? Check Arduino voor juiste poort
+ser = serial.Serial('COM3', 9600)  # ? Check Arduino voor juiste poort (COM6)
 
 # * Scores in volgende volgorde: Rood, Wit, Blauw, groen, geel
 scores = [0, 0, 0, 0, 0]
-delayT = 3  # Tijd dat applicatie 'slaapt' in SECONDEN
+# delayT = 3  # Tijd dat applicatie 'slaapt' in SECONDEN
 
 
 class BackgroundLabel(Label):
@@ -118,7 +118,7 @@ class ScorebordApp(App):
         Clock.schedule_interval(groen.update, 0.5)
         Clock.schedule_interval(geel.update, 0.5)
 
-        Clock.schedule_interval(self.timer, 20)
+        Clock.schedule_interval(self.timer, 15)
 
         return layout
 

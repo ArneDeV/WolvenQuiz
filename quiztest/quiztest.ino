@@ -1,5 +1,5 @@
 /*
- * Fuut - Laatste update 10/02/2020
+ * Fuut - Laatste update 14/04/2020
 
  * Basic quiz systeem met score bord
  * LED van buttons --> Rood = ground
@@ -61,6 +61,11 @@ bool firstStart = true;
 int scores[] = {0, 0, 0, 0, 0}; // Volgorde: rood, wit, Blauw, groen, geel
 // int teams[] = {0, 1, 2, 3, 4, 5};
 int i;
+
+// ! Buzzer (expirementeel)
+// int buzzPin = A5;
+// int buzzDuration = 250;
+
 
 void setup() {
   // put your setup code here, to run once:
@@ -145,12 +150,15 @@ void loop() {
       digitalWrite(blueLed, HIGH);
       resetAan = 1;
       i = 2; // 3
+
     }
     if((yellowButtonState == 0)&&(resetAan == 0)) {
       digitalWrite(yellowLed, HIGH);
       resetAan = 1;
       i = 4;
     }
+  
+
   
     if(resetAan == 1) {
       resetFunction(scores[i], i); 
@@ -220,12 +228,3 @@ void turnLedsOff() {
   blueButtonState = 0;
   yellowButtonState = 0;
 }
-
-/* void printScores() {
-  Serial.println("Score " + redName + ": " + String(scores[0]));
-  Serial.println("Score " + whiteName + ": " + String(scores[1]));
-  Serial.println("Score " + greenName + ": " + String(scores[2]));
-  Serial.println("Score " + blueName + ": " + String(scores[3]));
-  Serial.println("Score " + yellowName + ": " + String(scores[4]));
-  Serial.println("\n\n\n\n\n\n");
-} */
