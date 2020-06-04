@@ -112,11 +112,12 @@ class ScorebordApp(App):
             Label(text="Wolven Quiz", size_hint_y=0.25, font_size=50))
         layout.add_widget(secondRow)
 
-        Clock.schedule_interval(rood.update, 0.5)
-        Clock.schedule_interval(wit.update, 0.5)
-        Clock.schedule_interval(blauw.update, 0.5)
-        Clock.schedule_interval(groen.update, 0.5)
-        Clock.schedule_interval(geel.update, 0.5)
+        # Half werkende waarde voor clock --> 0.5
+        Clock.schedule_interval(rood.update, 1.5)
+        Clock.schedule_interval(wit.update, 1.5)
+        Clock.schedule_interval(blauw.update, 1.5)
+        Clock.schedule_interval(groen.update, 1.5)
+        Clock.schedule_interval(geel.update, 1.5)
 
         Clock.schedule_interval(self.timer, 15)
 
